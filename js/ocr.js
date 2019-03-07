@@ -32,8 +32,6 @@ function load() {
             var str = localStorage[key].slice(1);
             str = str.slice(0, -1);
             str = str.split(",");
-            //console.log(str);
-            //console.log(str[1]);
             if (str[1].match("m")) {
                 distance[i] = str[0];
                 distance_unit[i] = key;
@@ -96,18 +94,7 @@ function convert(char, x, y, W, H) {
         drawRect(converted_num + distance_unit[0], x, y, W, H);
         before_num.push([num, x, y, W, H]);
         unit = "distance";
-    } //else if ((String(char).indexOf("9,000") > -1) || (String(char).indexOf("119,000") > -1)) {
-    //     var num = 119000;
-    //     var HourRate = localStorage.getItem("ヶ月間労働").slice(1);
-    //     HourRate = HourRate.slice(0, -1);
-    //     HourRate = HourRate.split(",");
-    //     HourRate = HourRate[0];
-    //     HourRate = HourRate - Math.floor(HourRate * 0.1);
-    //     var converted_num = Math.floor(((num / money[0]) * Math.pow(10, 1))) / Math.pow(10, 1);
-    //     drawRect(converted_num + money_unit[0], x, y, W, H);
-    //     before_num.push([num, x, y, W, H]);
-    //     unit = "money";
-    // }
+    }
     else if (String(char).match("119,000")) {
         var num = 119000;
         var HourRate = localStorage.getItem("ヶ月間労働").slice(1);
@@ -129,13 +116,10 @@ function convert(char, x, y, W, H) {
         HourRate = HourRate[0];
         HourRate = HourRate - Math.floor(HourRate * 0.1);
         var converted_num = Math.floor(((num / money[0]) * Math.pow(10, 1))) / Math.pow(10, 1);
-        drawRect(converted_num + money_unit[0], x - 60, y, W + 90, H);
-        before_num.push([num, x - 60, y, W + 90, H]);
+        drawRect(converted_num + money_unit[0], x - W / 4, y, W + W / 2, H);
+        before_num.push([num, x - W / 4, y, W + W / 2, H]);
         unit = "money";
     }
-    // else {
-    //     $('#results').text(char + "は単位が認識されませんでした。")
-    // }
 }
 
 
@@ -155,7 +139,6 @@ function changeUnit() {
             converted_num = Math.floor(((converted_num / money[convert_count]) * Math.pow(10, 1))) / Math.pow(10, 1);
             drawRect(converted_num + money_unit[convert_count], before_num[i][1], before_num[i][2], before_num[i][3], before_num[i][4]);
         }
-        //console.log(before_num);
         convert_count++;
     } else if (unit == "distance") {
         if (convert_count >= distance.length) {
@@ -243,19 +226,6 @@ function displayJSON(data) {
             convert(char, min_x * w / origin_w, min_y * h / origin_h, (max_x - min_x) * w / origin_w, (max_y - min_y) * h / origin_h);
         }
     }
-    // sentence = (contents[0].description.split(/\n/));
-    // for (var i = 0; i < sentence.length; i++) {
-    //     if (sentence[i].indexOf("円") > -1) {
-    //         console.log(sentence[i]);
-    //         number = sentence[i].trim();
-    //         number.replace(",", "");
-    //         number.replace(" ", "");
-    //         console.log(number);
-    //     }
-    // }
-    // //console.log(sentence);
-    // console.log(contents);
-    // console.log(data);
 }
 
 function drawRect(char, x, y, W, H) {
